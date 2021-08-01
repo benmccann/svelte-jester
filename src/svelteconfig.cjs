@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const configFilenames = ['svelte.config.js', 'svelte.config.cjs']
+const configFilename = 'svelte.config.js'
 
 exports.getSvelteConfig = (rootMode, filename, preprocess) => {
   let configFile = null
@@ -15,18 +15,16 @@ exports.getSvelteConfig = (rootMode, filename, preprocess) => {
   }
 
   if (configFile === null || !fs.existsSync(configFile)) {
-    throw Error(`Could not find ${configFilenames.join(' or ')} or ${configFile}.`)
+    throw Error(`Could not find ${configFilename}`)
   }
 
   return configFile
 }
 
 const getConfigFile = (searchDir) => {
-  for (const configFilename of configFilenames) {
-    const filePath = path.resolve(searchDir, configFilename)
-    if (fs.existsSync(filePath)) {
-      return filePath
-    }
+  const filePath = path.resolve(searchDir, configFilename)
+  if (fs.existsSync(filePath)) {
+    return filePath
   }
 
   return null
